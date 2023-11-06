@@ -1,26 +1,23 @@
 let ball, floor;
 let floors = [];
 let boxes = [];
-
 let lastSwitchTime = 0;
-
 let score = 0;
 
-function setup() {
 
-  clear();
+function setup() {
  new Canvas(1200, 1200);
  world.gravity.y = 15;
 
-
+//ball
  ball = new Sprite();
  ball.diameter = 40;
  ball.y = 50;
  ball.color = 'DarkTurquoise';
 
+ //  floor 
  for(let i = 0; i < 20; i++){
   let floor = new Sprite();
-//  floor 
  floor.y = random(200,1000);
  floor.x = random(width);
  floor.w = random(130,250);
@@ -31,6 +28,7 @@ function setup() {
  floor.color = 'pink';
  floors.push(floor);
 
+ //box
  if(random() < 0.5) { 
   let box = new Sprite();
   box.width = 20;
@@ -40,28 +38,28 @@ function setup() {
   boxes.push(box);
   box.color = 'gold';
 }
-
-    
  }
-
-
-
 }
-//jump
+
+
 function draw() {
+
+  //jump
   if (kb.pressing('space')) {
     if (world.gravity.y > 0) {
-      ball.vel.y = -7;  
+      ball.vel.y = -5;  
     } else {
-      ball.vel.y = 7;  
+      ball.vel.y = 5;  
     }
   }
 
+  //control ball
  if (kb.pressing('left')) ball.vel.x = -7;
   else if (kb.pressing('right')) ball.vel.x = 7;
   else ball.vel.x = 0; 
-  clear();
+  // clear();
   background('PapayaWhip');
+
   //move floor
   for (let i = floors.length - 1; i >= 0; i--) {
     if (floors[i].position.y + floors[i].height < 0) {
@@ -69,7 +67,7 @@ function draw() {
     }
 }
 
-
+  //add floors
 if (random() < 0.05) {  
   let newFloor = new Sprite();
   newFloor.y = height;
@@ -83,6 +81,8 @@ if (random() < 0.05) {
 
   floors.push(newFloor);
 
+
+  //add boxes
   if(random() < 0.5) {
     let box = new Sprite();
     box.width = 20;
@@ -106,7 +106,7 @@ let currentTime = millis();
     lastSwitchTime = currentTime; 
   }
 
-
+//game over
   if (ball.position.y <= 0 || ball.position.y >= height) {
     noLoop();  
     textSize(64); 
@@ -116,6 +116,7 @@ let currentTime = millis();
    
 }
 
+// get score
 for (let i = 0; i < boxes.length; i++) {
   if (!boxes[i].hasBeenHit && ball.x < boxes[i].x + boxes[i].width &&
       ball.x + ball.diameter > boxes[i].x &&
@@ -134,8 +135,14 @@ for (let i = 0; i < boxes.length; i++) {
   }
 }
 
-
+//display
 textSize(32);
 textAlign(LEFT, TOP);
 text('Score: ' + score, 10, 10);
+
+textSize(20);
+textAlign(LEFT, TOP);
+text('Space: jump' ,10, 50);
+text('Collision Box: Score' ,10, 80);
+text('Leaving the screen: game over',10,110);
 }
