@@ -12,9 +12,6 @@ function setup() {
  new Canvas(1200, 1200);
  world.gravity.y = 15;
 
-//  box = new Sprite();
-//  box.width = 20;
-//  box.height = 20;
 
  ball = new Sprite();
  ball.diameter = 40;
@@ -23,7 +20,7 @@ function setup() {
 
  for(let i = 0; i < 20; i++){
   let floor = new Sprite();
-//  floor = new Sprite();
+//  floor 
  floor.y = random(200,1000);
  floor.x = random(width);
  floor.w = random(130,250);
@@ -34,7 +31,7 @@ function setup() {
  floor.color = 'pink';
  floors.push(floor);
 
- if(random() < 0.5) {  // 新增的代码
+ if(random() < 0.5) { 
   let box = new Sprite();
   box.width = 20;
   box.height = 20;
@@ -50,13 +47,13 @@ function setup() {
 
 
 }
-
+//jump
 function draw() {
   if (kb.pressing('space')) {
     if (world.gravity.y > 0) {
-      ball.vel.y = -7;  // 正常重力时向上跳跃
+      ball.vel.y = -7;  
     } else {
-      ball.vel.y = 7;   // 反重力时向下跳跃
+      ball.vel.y = 7;  
     }
   }
 
@@ -73,7 +70,7 @@ function draw() {
 }
 
 
-if (random() < 0.05) {  // 2% 的概率每帧生成一个新的 floor 对象
+if (random() < 0.05) {  
   let newFloor = new Sprite();
   newFloor.y = height;
   newFloor.x = random(width);
@@ -86,7 +83,7 @@ if (random() < 0.05) {  // 2% 的概率每帧生成一个新的 floor 对象
 
   floors.push(newFloor);
 
-  if(random() < 0.5) {  // 新增的代码
+  if(random() < 0.5) {
     let box = new Sprite();
     box.width = 20;
     box.height = 20;
@@ -96,28 +93,27 @@ if (random() < 0.05) {  // 2% 的概率每帧生成一个新的 floor 对象
     box.color = 'gold';
   }
 }
+
 //gravity change
 let currentTime = millis();
-  if (currentTime - lastSwitchTime >=6000) {  // 检查是否已过了5000毫秒（5秒）
+  if (currentTime - lastSwitchTime >=6000) {
     if (world.gravity.y == 15) {
       world.gravity.y = -15;
    
     } else {
       world.gravity.y = 15;
     }
-    lastSwitchTime = currentTime;  // 更新 lastSwitchTime 以便下一次切换
+    lastSwitchTime = currentTime; 
   }
 
 
   if (ball.position.y <= 0 || ball.position.y >= height) {
-    noLoop();  // 停止游戏循环
-    textSize(64);  // 设置文本大小
-    textAlign(CENTER, CENTER);  // 设置文本对齐方式
-    text('Game Over', width/2, height/2);  // 在画布中央显示游戏结束的消
+    noLoop();  
+    textSize(64); 
+    textAlign(CENTER, CENTER); 
+    text('Game Over', width/2, height/2);  
 
-    // textSize(26);  // 设置文本大小
-    // textAlign(CENTER, CENTER);  // 设置文本对齐方式
-    // text('Press Space', width/2, height/2+50);  // 在画布中央显示游戏结束的消
+   
 }
 
 for (let i = 0; i < boxes.length; i++) {
@@ -125,32 +121,21 @@ for (let i = 0; i < boxes.length; i++) {
       ball.x + ball.diameter > boxes[i].x &&
       ball.y < boxes[i].y + boxes[i].height &&
       ball.y + ball.diameter > boxes[i].y) {
-      // 检测到碰撞
-      score++;  // 分数增加
-      boxes[i].hasBeenHit = true;  // 标记方块为已碰撞
+     
+      score++; 
+      boxes[i].hasBeenHit = true; 
   } else if (boxes[i].hasBeenHit && 
              (ball.x > boxes[i].x + boxes[i].width || 
               ball.x + ball.diameter < boxes[i].x ||
               ball.y > boxes[i].y + boxes[i].height ||
               ball.y + ball.diameter < boxes[i].y)) {
-      // 如果球不再碰撞，重置标志
+      
       boxes[i].hasBeenHit = false;
   }
 }
 
-// Display the score on the canvas
+
 textSize(32);
 textAlign(LEFT, TOP);
 text('Score: ' + score, 10, 10);
-
-
-
 }
-
-// function keyPressed() {
-//   if (key === ' ') {  // 检查是否按下了空格键
-//     setup();  // 重启游戏
-    
-
-//   }
-// }
